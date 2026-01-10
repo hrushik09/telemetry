@@ -1,0 +1,11 @@
+- domain modeling
+- event ingestion api
+- async event processing
+- calculate real-time analytics
+    - Moving averages (1 min, 5 min, 15 min windows)
+    - Historical aggregations (hourly, daily)
+- dashboard view
+- add key-based auth for ingestion
+- add token-based auth for dashboard
+- rate limiting for ingestion
+- threshold-based alerts
