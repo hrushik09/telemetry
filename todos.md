@@ -1,5 +1,5 @@
-- domain modeling
 - event ingestion api
+- domain modeling
 - async event processing
 - calculate real-time analytics
     - Moving averages (1 min, 5 min, 15 min windows)
@@ -9,3 +9,9 @@
 - add token-based auth for dashboard
 - rate limiting for ingestion
 - threshold-based alerts
+
+- consider using MQTT protocol as sensors have limited bandwidth, intermittent connectivity
+- consider using Protobuf serialization instead of JSON for data transfer
+- batching of events by sensors
+- data retention policy
+- data compression policy
