@@ -1,0 +1,48 @@
+version: '3'
+
+vars:
+  GOOS: "{{default .OS .GOOS}}"
+  MVNW: '{{if eq .GOOS "windows"}}mvnw.cmd{{else}}./mvnw{{end}}'
+  DC_DIR: "deployment/docker-compose"
+  INFRA_DC_FILE: "{{.DC_DIR}}/infra.yaml"
+  APP_DC_FILE: "{{.DC_DIR}}/app.yaml"
+
+tasks:
+  default:
+    cmds:
+      - task: test
+
+  test:
+    cmds:
+      - "{{.MVNW}} clean verify"
+
+  build:
+    cmds:
+      - "{{.MVNW}} clean package -DskipTests=true"
+      - "docker build -t hrushik09/telemetry-app ."
+
+  start:
+    deps: [ build ]
+    cmds:
+      - "docker compose -f {{.INFRA_DC_FILE}} -f {{.APP_DC_FILE}} up -d"
+
+  stop:
+    cmds:
+      - "docker compose -f {{.INFRA_DC_FILE}} -f {{.APP_DC_FILE}} stop"
+      - "docker compose -f {{.INFRA_DC_FILE}} -f {{.APP_DC_FILE}} rm -f"
+
+  purge:
+    cmds:
+      - "docker compose -f {{.INFRA_DC_FILE}} -f {{.APP_DC_FILE}} down -v"
+
+  restart:
+    cmds:
+      - task: stop
+      - task: sleep
+      - task: start
+
+  sleep:
+    vars:
+      DURATION: "{{default 5 .DURATION}}"
+    cmds:
+      - "sleep {{.DURATION}}"
