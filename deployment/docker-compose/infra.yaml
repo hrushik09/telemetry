@@ -1,7 +1,7 @@
 name: telemetry-infra
 services:
   telemetry-db:
-    image: 'postgres:18.1-alpine'
+    image: 'timescale/timescaledb:latest-pg18'
     container_name: telemetry-db
     restart: unless-stopped
     environment:
