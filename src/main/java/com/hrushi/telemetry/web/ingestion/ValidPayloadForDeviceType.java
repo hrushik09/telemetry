@@ -6,7 +6,7 @@ import jakarta.validation.Payload;
 import java.lang.annotation.*;
 
 @Documented
-@Constraint(validatedBy = ValidPayloadForDeviceTypeValidator.class)
+@Constraint(validatedBy = PayloadForDeviceTypeValidator.class)
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @interface ValidPayloadForDeviceType {

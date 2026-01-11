@@ -8,4 +8,19 @@ import java.lang.annotation.RetentionPolicy;
     String deviceType();
 
     String[] requiredFields();
+
+    FieldType[] fieldTypes();
+
+    enum PayloadDataType {
+        FLOAT, STRING
+    }
+
+    @Retention(RetentionPolicy.RUNTIME)
+    @interface FieldType {
+        String field();
+
+        PayloadDataType type();
+
+        String[] allowedValues() default {};
+    }
 }
