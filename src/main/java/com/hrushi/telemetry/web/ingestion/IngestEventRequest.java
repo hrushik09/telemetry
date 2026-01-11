@@ -1,35 +1,31 @@
 package com.hrushi.telemetry.web.ingestion;
 
-import com.hrushi.telemetry.web.ingestion.PayloadFieldMapping.FieldType;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 
 import java.util.Map;
 
-import static com.hrushi.telemetry.web.ingestion.PayloadFieldMapping.PayloadDataType.FLOAT;
-import static com.hrushi.telemetry.web.ingestion.PayloadFieldMapping.PayloadDataType.STRING;
-
 @ValidPayloadForDeviceType(mappings = {
         @PayloadFieldMapping(deviceType = "temperature", fieldTypes = {
-                @FieldType(field = "temperature", type = FLOAT),
-                @FieldType(field = "unit", type = STRING, allowedValues = {"celsius", "fahrenheit"})
+                @FieldType(field = "temperature", type = PayloadDataType.FLOAT),
+                @FieldType(field = "unit", type = PayloadDataType.STRING, allowedValues = {"celsius", "fahrenheit"})
         }),
         @PayloadFieldMapping(deviceType = "humidity", fieldTypes = {
-                @FieldType(field = "humidity", type = FLOAT),
-                @FieldType(field = "unit", type = STRING, allowedValues = {"percent"})
+                @FieldType(field = "humidity", type = PayloadDataType.FLOAT),
+                @FieldType(field = "unit", type = PayloadDataType.STRING, allowedValues = {"percent"})
         }),
         @PayloadFieldMapping(deviceType = "air_quality", fieldTypes = {
-                @FieldType(field = "pm25", type = FLOAT),
-                @FieldType(field = "pm10", type = FLOAT),
-                @FieldType(field = "co2", type = FLOAT),
-                @FieldType(field = "voc", type = FLOAT),
-                @FieldType(field = "aqi", type = FLOAT)
+                @FieldType(field = "pm25", type = PayloadDataType.FLOAT),
+                @FieldType(field = "pm10", type = PayloadDataType.FLOAT),
+                @FieldType(field = "co2", type = PayloadDataType.FLOAT),
+                @FieldType(field = "voc", type = PayloadDataType.FLOAT),
+                @FieldType(field = "aqi", type = PayloadDataType.FLOAT)
         }),
         @PayloadFieldMapping(deviceType = "temperature_humidity", fieldTypes = {
-                @FieldType(field = "temperature", type = FLOAT),
-                @FieldType(field = "temperatureUnit", type = STRING, allowedValues = {"celsius", "fahrenheit"}),
-                @FieldType(field = "humidity", type = FLOAT),
-                @FieldType(field = "humidityUnit", type = STRING, allowedValues = {"percent"})
+                @FieldType(field = "temperature", type = PayloadDataType.FLOAT),
+                @FieldType(field = "temperatureUnit", type = PayloadDataType.STRING, allowedValues = {"celsius", "fahrenheit"}),
+                @FieldType(field = "humidity", type = PayloadDataType.FLOAT),
+                @FieldType(field = "humidityUnit", type = PayloadDataType.STRING, allowedValues = {"percent"})
         })
 })
 record IngestEventRequest(@NotNull @ValidUuid String eventId,

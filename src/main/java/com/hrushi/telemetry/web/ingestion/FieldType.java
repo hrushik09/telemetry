@@ -4,8 +4,10 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 @Retention(RetentionPolicy.RUNTIME)
-@interface PayloadFieldMapping {
-    String deviceType();
+@interface FieldType {
+    String field();
 
-    FieldType[] fieldTypes();
+    PayloadDataType type();
+
+    String[] allowedValues() default {};
 }

@@ -11,7 +11,7 @@ import java.util.stream.Stream;
 
 class PayloadForDeviceTypeValidator implements ConstraintValidator<ValidPayloadForDeviceType, IngestEventRequest> {
     private Map<String, Set<String>> requiredFieldsByDeviceType;
-    private Map<String, Map<String, PayloadFieldMapping.FieldType>> fieldTypesByDeviceType;
+    private Map<String, Map<String, FieldType>> fieldTypesByDeviceType;
 
     @Override
     public void initialize(ValidPayloadForDeviceType constraintAnnotation) {
@@ -19,7 +19,7 @@ class PayloadForDeviceTypeValidator implements ConstraintValidator<ValidPayloadF
                 .collect(Collectors.toMap(
                         PayloadFieldMapping::deviceType,
                         mapping -> Arrays.stream(mapping.fieldTypes())
-                                .map(PayloadFieldMapping.FieldType::field)
+                                .map(FieldType::field)
                                 .collect(Collectors.toSet())
                 ));
 
@@ -28,7 +28,7 @@ class PayloadForDeviceTypeValidator implements ConstraintValidator<ValidPayloadF
                         PayloadFieldMapping::deviceType,
                         mapping -> Stream.of(mapping.fieldTypes())
                                 .collect(Collectors.toMap(
-                                        PayloadFieldMapping.FieldType::field,
+                                        FieldType::field,
                                         fieldType -> fieldType
                                 ))
                 ));
@@ -59,19 +59,20 @@ class PayloadForDeviceTypeValidator implements ConstraintValidator<ValidPayloadF
         }
 
         // check field data types
-        Map<String, PayloadFieldMapping.FieldType> fieldTypes = fieldTypesByDeviceType.get(value.deviceType());
+        Map<String, FieldType> fieldTypes = fieldTypesByDeviceType.get(value.deviceType());
         if (fieldTypes != null) {
             for (Map.Entry<String, Object> entry : payload.entrySet()) {
                 String field = entry.getKey();
                 Object fieldValue = entry.getValue();
-                PayloadFieldMapping.FieldType fieldType = fieldTypes.get(field);
+                FieldType fieldType = fieldTypes.get(field);
                 if (fieldType != null && fieldValue != null) {
                     if (!isValidType(fieldValue, fieldType)) {
                         context.disableDefaultConstraintViolation();
-                        context.buildConstraintViolationWithTemplate("Field '" + field + "' must be of type " + fieldType.type() +
-                                                                     (fieldType.allowedValues().length > 0
-                                                                             ? " with allowed values: " + String.join(", ", fieldType.allowedValues())
-                                                                             : ""))
+                        String message = "Field '" + field + "' must be of type " + fieldType.type() +
+                                         (fieldType.allowedValues().length > 0
+                                                 ? " with allowed values: " + String.join(", ", fieldType.allowedValues())
+                                                 : "");
+                        context.buildConstraintViolationWithTemplate(message)
                                 .addPropertyNode("payload")
                                 .addPropertyNode(field)
                                 .addConstraintViolation();
@@ -84,7 +85,7 @@ class PayloadForDeviceTypeValidator implements ConstraintValidator<ValidPayloadF
         return valid;
     }
 
-    private boolean isValidType(Object fieldValue, PayloadFieldMapping.FieldType fieldType) {
+    private boolean isValidType(Object fieldValue, FieldType fieldType) {
         return switch (fieldType.type()) {
             case FLOAT -> fieldValue instanceof Double || fieldValue instanceof Integer || fieldValue instanceof Long;
             case STRING -> {
