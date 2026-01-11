@@ -1,4 +1,4 @@
-package com.hrushi.telemetry.web.ingestion;
+package com.hrushi.telemetry.web;
 
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
