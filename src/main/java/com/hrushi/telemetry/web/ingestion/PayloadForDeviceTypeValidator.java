@@ -49,6 +49,7 @@ class PayloadForDeviceTypeValidator implements ConstraintValidator<ValidPayloadF
                 context.disableDefaultConstraintViolation();
                 context.buildConstraintViolationWithTemplate("Missing required field '" + field + "' in payload for device type '" + value.deviceType() + "'")
                         .addPropertyNode("payload")
+                        .addPropertyNode(field)
                         .addConstraintViolation();
                 valid = false;
             }
@@ -82,7 +83,7 @@ class PayloadForDeviceTypeValidator implements ConstraintValidator<ValidPayloadF
 
     private boolean isValidType(Object fieldValue, PayloadFieldMapping.FieldType fieldType) {
         return switch (fieldType.type()) {
-            case FLOAT -> fieldValue instanceof Float;
+            case FLOAT -> fieldValue instanceof Double || fieldValue instanceof Integer || fieldValue instanceof Long;
             case STRING -> {
                 if (!(fieldValue instanceof String)) {
                     yield false;
