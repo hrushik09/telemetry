@@ -12,51 +12,51 @@ import java.util.Map;
         @PayloadFieldMapping(deviceType = "temperature_humidity", requiredFields = {"temperature", "temperatureUnit", "humidity", "humidityUnit"})
 })
 record IngestEventRequest(
-        @NotNull(message = "Missing eventId")
-        @ValidUuid(message = "Invalid eventId")
+        @NotNull
+        @ValidUuid
         String eventId,
-        @NotNull(message = "Missing deviceId")
-        @Size(min = 1, max = 255, message = "deviceId should be between 1 and 255 characters")
+        @NotNull
+        @Size(min = 1, max = 255)
         String deviceId,
-        @NotNull(message = "Missing deviceType")
-        @ValidDeviceType(message = "Invalid deviceType", allowedDeviceTypes = {"temperature", "humidity", "air_quality", "temperature_humidity"})
+        @NotNull
+        @ValidDeviceType(allowed = {"temperature", "humidity", "air_quality", "temperature_humidity"})
         String deviceType,
-        @NotNull(message = "Missing timestamp")
-        @ValidIsoDateTime(message = "timestamp should be in ISO 8601 format")
+        @NotNull
+        @ValidIsoDateTime
         String timestamp,
-        @NotNull(message = "Missing payload")
+        @NotNull
         Map<String, Object> payload,
-        @NotNull(message = "Missing metadata")
+        @NotNull
         @Valid
         Metadata metadata,
-        @NotNull(message = "Missing sequenceNumber")
-        @Positive(message = "sequenceNumber should be positive")
+        @NotNull
+        @Positive
         Long sequenceNumber
 ) {
     record Metadata(
-            @NotNull(message = "Missing firmwareVersion")
-            @Size(min = 1, max = 255, message = "firmwareVersion should be between 1 and 255 characters")
+            @NotNull
+            @Size(min = 1, max = 255)
             String firmwareVersion,
-            @NotNull(message = "Missing batteryLevel")
-            @Min(value = 0, message = "batteryLevel should be between 0 and 100")
-            @Max(value = 100, message = "batteryLevel should be between 0 and 100")
+            @NotNull
+            @Min(value = 0)
+            @Max(value = 100)
             Integer batteryLevel,
-            @NotNull(message = "Missing signalStrength")
-            @Min(value = 0, message = "signalStrength should be between 0 and 100")
-            @Max(value = 100, message = "signalStrength should be between 0 and 100")
+            @NotNull
+            @Min(value = 0)
+            @Max(value = 100)
             Integer signalStrength,
-            @NotNull(message = "Missing location")
+            @NotNull
             @Valid
             Location location
     ) {
         record Location(
-                @NotNull(message = "Missing latitude")
-                @Min(value = -90, message = "latitude should be between -90 and 90")
-                @Max(value = 90, message = "latitude should be between -90 and 90")
+                @NotNull
+                @Min(value = -90)
+                @Max(value = 90)
                 Double latitude,
-                @NotNull(message = "Missing longitude")
-                @Min(value = -180, message = "longitude should be between -180 and 180")
-                @Max(value = 180, message = "longitude should be between -180 and 180")
+                @NotNull
+                @Min(value = -180)
+                @Max(value = 180)
                 Double longitude
         ) {
         }

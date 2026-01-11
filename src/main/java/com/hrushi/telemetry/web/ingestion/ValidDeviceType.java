@@ -10,9 +10,9 @@ import java.lang.annotation.*;
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 @interface ValidDeviceType {
-    String message();
+    String message() default "must be a valid device type: {allowed}";
 
-    String[] allowedDeviceTypes();
+    String[] allowed();
 
     Class<?>[] groups() default {};
 

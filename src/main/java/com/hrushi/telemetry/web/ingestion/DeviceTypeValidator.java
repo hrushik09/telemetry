@@ -10,8 +10,7 @@ class DeviceTypeValidator implements ConstraintValidator<ValidDeviceType, String
 
     @Override
     public void initialize(ValidDeviceType constraintAnnotation) {
-        String[] allowedDeviceTypes = constraintAnnotation.allowedDeviceTypes();
-        validDeviceTypes = Set.of(allowedDeviceTypes);
+        validDeviceTypes = Set.of(constraintAnnotation.allowed());
     }
 
     @Override

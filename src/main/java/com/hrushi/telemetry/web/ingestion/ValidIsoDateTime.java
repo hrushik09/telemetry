@@ -10,7 +10,7 @@ import java.lang.annotation.*;
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 @interface ValidIsoDateTime {
-    String message();
+    String message() default "must be a valid ISO 8601 date time";
 
     Class<?>[] groups() default {};
 
