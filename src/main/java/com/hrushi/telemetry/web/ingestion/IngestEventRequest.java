@@ -29,12 +29,12 @@ import java.util.Map;
         })
 })
 record IngestEventRequest(@NotNull @ValidUuid String eventId,
+                          @NotNull @Positive Long sequenceNumber,
+                          @NotNull @ValidIsoDateTime String timestamp,
                           @NotNull @Size(min = 1, max = 255) String deviceId,
                           @NotNull @ValidDeviceType(allowed = {"temperature", "humidity", "air_quality", "temperature_humidity"}) String deviceType,
-                          @NotNull @ValidIsoDateTime String timestamp,
                           @NotNull Map<String, Object> payload,
-                          @NotNull @Valid Metadata metadata,
-                          @NotNull @Positive Long sequenceNumber
+                          @NotNull @Valid Metadata metadata
 ) {
     record Metadata(@NotNull @Size(min = 1, max = 255) String firmwareVersion,
                     @NotNull @Min(value = 0) @Max(value = 100) Integer batteryLevel,
