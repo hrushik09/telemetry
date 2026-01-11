@@ -4,6 +4,12 @@ import jakarta.validation.constraints.*;
 
 import java.util.Map;
 
+@ValidPayloadForDeviceType(message = "Invalid payload for device type", mappings = {
+        @PayloadFieldMapping(deviceType = "temperature", requiredFields = {"temperature", "unit"}),
+        @PayloadFieldMapping(deviceType = "humidity", requiredFields = {"humidity", "unit"}),
+        @PayloadFieldMapping(deviceType = "air_quality", requiredFields = {"pm25", "pm10", "co2", "voc", "aqi"}),
+        @PayloadFieldMapping(deviceType = "temperature_humidity", requiredFields = {"temperature", "temperatureUnit", "humidity", "humidityUnit"})
+})
 record IngestEventRequest(
         @NotNull(message = "Missing eventId")
         @ValidUuid(message = "Invalid eventId")
