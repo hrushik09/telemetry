@@ -7,8 +7,6 @@ import java.lang.annotation.RetentionPolicy;
 @interface PayloadFieldMapping {
     String deviceType();
 
-    String[] requiredFields();
-
     FieldType[] fieldTypes();
 
     enum PayloadDataType {

@@ -3,6 +3,7 @@ package com.hrushi.telemetry.web.ingestion;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
+import java.util.Arrays;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -17,7 +18,9 @@ class PayloadForDeviceTypeValidator implements ConstraintValidator<ValidPayloadF
         this.requiredFieldsByDeviceType = Stream.of(constraintAnnotation.mappings())
                 .collect(Collectors.toMap(
                         PayloadFieldMapping::deviceType,
-                        mapping -> Set.of(mapping.requiredFields())
+                        mapping -> Arrays.stream(mapping.fieldTypes())
+                                .map(PayloadFieldMapping.FieldType::field)
+                                .collect(Collectors.toSet())
                 ));
 
         this.fieldTypesByDeviceType = Stream.of(constraintAnnotation.mappings())
