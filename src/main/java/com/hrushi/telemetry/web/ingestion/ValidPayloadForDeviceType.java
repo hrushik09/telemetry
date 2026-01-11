@@ -10,7 +10,7 @@ import java.lang.annotation.*;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @interface ValidPayloadForDeviceType {
-    String message();
+    String message() default "must be a valid payload for device type";
 
     PayloadFieldMapping[] mappings();
 
