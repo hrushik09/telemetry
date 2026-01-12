@@ -87,7 +87,10 @@ class PayloadForDeviceTypeValidator implements ConstraintValidator<ValidPayloadF
 
     private boolean isValidType(Object fieldValue, FieldType fieldType) {
         return switch (fieldType.type()) {
-            case FLOAT -> fieldValue instanceof Double || fieldValue instanceof Integer || fieldValue instanceof Long;
+            case FLOAT -> fieldValue instanceof Double
+                          || fieldValue instanceof Float
+                          || fieldValue instanceof Integer
+                          || fieldValue instanceof Long;
             case STRING -> {
                 if (!(fieldValue instanceof String)) {
                     yield false;
