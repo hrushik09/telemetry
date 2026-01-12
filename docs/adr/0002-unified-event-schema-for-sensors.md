@@ -30,8 +30,8 @@ Use a unified event schema for all sensor types with the following structure:
     "batteryLevel": "integer",
     "signalStrength": "integer",
     "location": {
-      "lat": "float",
-      "lng": "float"
+       "latitude": "float",
+       "longitude": "float"
     }
   },
   "sequenceNumber": "long"
