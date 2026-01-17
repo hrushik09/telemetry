@@ -16,3 +16,4 @@ home, office, or industrial facility.
 - Spring Boot with Spring MVC
 - TimescaleDB
 - Docker for containerization
+- Kafka for async processing
