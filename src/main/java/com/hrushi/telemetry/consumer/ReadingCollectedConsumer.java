@@ -1,6 +1,6 @@
 package com.hrushi.telemetry.consumer;
 
-import com.hrushi.telemetry.events.EventIngested;
+import com.hrushi.telemetry.events.ReadingCollectedEvent;
 import com.hrushi.telemetry.exception.RetryableException;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.slf4j.Logger;
@@ -16,8 +16,8 @@ import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.stereotype.Component;
 
 @Component
-class EventIngestedConsumer {
-    private static final Logger log = LoggerFactory.getLogger(EventIngestedConsumer.class);
+class ReadingCollectedConsumer {
+    private static final Logger log = LoggerFactory.getLogger(ReadingCollectedConsumer.class);
 
     @RetryableTopic(
             attempts = "4",
@@ -27,24 +27,24 @@ class EventIngestedConsumer {
             include = RetryableException.class
     )
     @KafkaListener(
-            topics = "event-ingestion-topic",
-            groupId = "event-ingestion-group",
-            containerFactory = "eventIngestedKafkaListenerContainerFactory"
+            topics = "collect-readings-topic",
+            groupId = "collect-readings-group",
+            containerFactory = "readingCollectedKafkaListenerContainerFactory"
     )
-    void consume(ConsumerRecord<String, EventIngested> record) {
-        EventIngested eventIngested = record.value();
-        log.debug("received event: {}", eventIngested);
-        processEvent(eventIngested);
+    void consume(ConsumerRecord<String, ReadingCollectedEvent> record) {
+        ReadingCollectedEvent readingCollectedEvent = record.value();
+        log.debug("received event: {}", readingCollectedEvent);
+        processEvent(readingCollectedEvent);
         log.debug("event processed successfully");
     }
 
     @DltHandler
-    void handleDlt(ConsumerRecord<String, EventIngested> record, @Header(KafkaHeaders.EXCEPTION_MESSAGE) String exceptionMessage) {
+    void handleDlt(ConsumerRecord<String, ReadingCollectedEvent> record, @Header(KafkaHeaders.EXCEPTION_MESSAGE) String exceptionMessage) {
         log.error("Event exhausted retries: deviceId={}, partition={}, offset={}, exceptionMessage={}",
                 record.value().deviceId(), record.partition(), record.offset(), exceptionMessage);
     }
 
-    private void processEvent(EventIngested eventIngested) {
-        log.debug("processing event: {}", eventIngested);
+    private void processEvent(ReadingCollectedEvent readingCollectedEvent) {
+        log.debug("processing event: {}", readingCollectedEvent);
     }
 }

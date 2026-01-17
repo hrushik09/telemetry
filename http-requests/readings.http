@@ -1,5 +1,5 @@
 ### temperature
-POST http://localhost:8080/api/ingest/events
+POST http://localhost:8080/api/readings
 Content-Type: application/json
 Api-Version: 1
 

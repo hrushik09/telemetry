@@ -1,4 +1,4 @@
-package com.hrushi.telemetry.web.ingestion;
+package com.hrushi.telemetry.web.readings;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

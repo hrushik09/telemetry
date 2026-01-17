@@ -1,21 +1,20 @@
-package com.hrushi.telemetry.web.ingestion;
+package com.hrushi.telemetry.web.readings;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
+import java.util.UUID;
 
-class IsoDateTimeValidator implements ConstraintValidator<ValidIsoDateTime, String> {
+class UuidValidator implements ConstraintValidator<ValidUuid, String> {
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
         if (value == null) {
             return true;
         }
         try {
-            DateTimeFormatter.ISO_DATE_TIME.parse(value);
+            UUID.fromString(value);
             return true;
-        } catch (DateTimeParseException e) {
+        } catch (IllegalArgumentException e) {
             return false;
         }
     }

@@ -6,7 +6,8 @@ Accepted (2026-01-10)
 
 ## Context
 
-Similar to the unified schema for event ingestion, we need to decide on how to store event payloads in the database. Two
+Similar to the unified schema for readings collection, we need to decide on how to store event payloads in the database.
+Two
 approaches were considered:
 
 1. Wide table with extracted columns: Common metrics (temperature, humidity, pm25, etc.) will be extracted from the
