@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import java.util.concurrent.CompletableFuture;
 
 @Component
-class EventIngestedProducer {
+public class EventIngestedProducer {
     private static final Logger log = LoggerFactory.getLogger(EventIngestedProducer.class);
     private final KafkaTemplate<String, EventIngested> kafkaTemplate;
 
@@ -18,7 +18,7 @@ class EventIngestedProducer {
         this.kafkaTemplate = kafkaTemplate;
     }
 
-    void publish(EventIngested eventIngested) {
+    public void publish(EventIngested eventIngested) {
         log.debug("publishing event: {}", eventIngested);
         CompletableFuture<SendResult<String, EventIngested>> future = kafkaTemplate.send("event-ingestion-topic", eventIngested.deviceId(), eventIngested);
         future.whenCompleteAsync((result, ex) -> {
