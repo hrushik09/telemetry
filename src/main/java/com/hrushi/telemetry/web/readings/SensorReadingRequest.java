@@ -1,4 +1,4 @@
-package com.hrushi.telemetry.web.ingestion;
+package com.hrushi.telemetry.web.readings;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
@@ -28,13 +28,13 @@ import java.util.Map;
                 @FieldType(field = "humidityUnit", type = PayloadDataType.STRING, allowedValues = {"percent"})
         })
 })
-record IngestEventRequest(@NotNull @ValidUuid String eventId,
-                          @NotNull @Positive Long sequenceNumber,
-                          @NotNull @ValidIsoDateTime String timestamp,
-                          @NotNull @Size(min = 1, max = 255) String deviceId,
-                          @NotNull @ValidDeviceType(allowed = {"temperature", "humidity", "air_quality", "temperature_humidity"}) String deviceType,
-                          @NotNull Map<String, Object> payload,
-                          @NotNull @Valid Metadata metadata
+record SensorReadingRequest(@NotNull @ValidUuid String eventId,
+                            @NotNull @Positive Long sequenceNumber,
+                            @NotNull @ValidIsoDateTime String timestamp,
+                            @NotNull @Size(min = 1, max = 255) String deviceId,
+                            @NotNull @ValidDeviceType(allowed = {"temperature", "humidity", "air_quality", "temperature_humidity"}) String deviceType,
+                            @NotNull Map<String, Object> payload,
+                            @NotNull @Valid Metadata metadata
 ) {
     record Metadata(@NotNull @Size(min = 1, max = 255) String firmwareVersion,
                     @NotNull @Min(value = 0) @Max(value = 100) Integer batteryLevel,

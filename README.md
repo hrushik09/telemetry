@@ -5,8 +5,8 @@ home, office, or industrial facility.
 
 ## Overview of the proposed system:
 
-- Ingest events from sensors
-- Process events asynchronously
+- Collect readings from sensors
+- Process readings asynchronously
 - Store processed data in a TimescaleDB database
 - Visualize data in a dashboard
 

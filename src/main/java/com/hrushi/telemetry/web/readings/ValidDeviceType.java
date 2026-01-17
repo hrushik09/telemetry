@@ -1,4 +1,4 @@
-package com.hrushi.telemetry.web.ingestion;
+package com.hrushi.telemetry.web.readings;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
@@ -6,11 +6,13 @@ import jakarta.validation.Payload;
 import java.lang.annotation.*;
 
 @Documented
-@Constraint(validatedBy = IsoDateTimeValidator.class)
+@Constraint(validatedBy = DeviceTypeValidator.class)
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-@interface ValidIsoDateTime {
-    String message() default "must be a valid ISO 8601 date time";
+@interface ValidDeviceType {
+    String message() default "must be a valid device type: {allowed}";
+
+    String[] allowed();
 
     Class<?>[] groups() default {};
 

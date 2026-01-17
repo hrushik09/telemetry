@@ -1,4 +1,4 @@
-package com.hrushi.telemetry.web.ingestion;
+package com.hrushi.telemetry.web.readings;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
@@ -9,7 +9,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-class PayloadForDeviceTypeValidator implements ConstraintValidator<ValidPayloadForDeviceType, IngestEventRequest> {
+class PayloadForDeviceTypeValidator implements ConstraintValidator<ValidPayloadForDeviceType, SensorReadingRequest> {
     private Map<String, Set<String>> requiredFieldsByDeviceType;
     private Map<String, Map<String, FieldType>> fieldTypesByDeviceType;
 
@@ -35,7 +35,7 @@ class PayloadForDeviceTypeValidator implements ConstraintValidator<ValidPayloadF
     }
 
     @Override
-    public boolean isValid(IngestEventRequest value, ConstraintValidatorContext context) {
+    public boolean isValid(SensorReadingRequest value, ConstraintValidatorContext context) {
         if (value == null || value.payload() == null || value.deviceType() == null) {
             return true;
         }

@@ -3,9 +3,9 @@
     - Moving averages (1 min, 5 min, 15 min windows)
     - Historical aggregations (hourly, daily)
 - dashboard view
-- add key-based auth for ingestion
+- add key-based auth for collecting readings
 - add token-based auth for dashboard
-- rate limiting for ingestion
+- rate limiting for collecting readings
 - threshold-based alerts
 
 - consider using MQTT protocol as sensors have limited bandwidth, intermittent connectivity

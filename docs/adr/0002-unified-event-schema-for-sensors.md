@@ -6,7 +6,8 @@ Accepted (2026-01-10)
 
 ## Context
 
-The telemetry system needs to ingest data from multiple sensor types: temperature, humidity, and air quality. We need to
+The telemetry system needs to collect readings from multiple sensor types: temperature, humidity, and air quality. We
+need to
 decide whether to use:
 
 1. Unified schema: Single event structure for all sensor types with flexible `payload` field that varies by the sensor
