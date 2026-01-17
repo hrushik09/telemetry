@@ -1,0 +1,25 @@
+### temperature
+POST http://localhost:8080/api/ingest/events
+Content-Type: application/json
+Api-Version: 1
+
+{
+  "eventId": "{{$uuid}}",
+  "sequenceNumber": {{$randomInt}},
+  "timestamp": "{{$isoTimestamp}}",
+  "deviceId": "{{$random.alphabetic(7)}}",
+  "deviceType": "temperature",
+  "payload": {
+  "temperature": {{$random.float(0, 100)}},
+  "unit": "celsius"
+  },
+  "metadata": {
+  "firmwareVersion": "{{$random.alphabetic(5)}}",
+  "batteryLevel": {{$randomInt}},
+  "signalStrength": {{$randomInt}},
+  "location": {
+    "latitude": {{$random.float(-90, 90)}},
+    "longitude": {{$random.float(-180, 180)}}
+  }
+  }
+}
