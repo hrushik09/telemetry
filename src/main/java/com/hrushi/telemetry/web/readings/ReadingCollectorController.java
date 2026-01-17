@@ -1,6 +1,6 @@
 package com.hrushi.telemetry.web.readings;
 
-import com.hrushi.telemetry.events.ReadingCollected;
+import com.hrushi.telemetry.events.ReadingCollectedEvent;
 import com.hrushi.telemetry.producer.ReadingCollectedProducer;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
@@ -12,17 +12,17 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/readings")
-class ReadingsCollectorController {
-    private static final Logger log = LoggerFactory.getLogger(ReadingsCollectorController.class);
+class ReadingCollectorController {
+    private static final Logger log = LoggerFactory.getLogger(ReadingCollectorController.class);
     private final ReadingCollectedProducer readingCollectedProducer;
 
-    ReadingsCollectorController(ReadingCollectedProducer readingCollectedProducer) {
+    ReadingCollectorController(ReadingCollectedProducer readingCollectedProducer) {
         this.readingCollectedProducer = readingCollectedProducer;
     }
 
     @PostMapping(version = "1")
-    void collectReadings(@Valid @RequestBody SensorReadingRequest request) {
+    void collectReading(@Valid @RequestBody SensorReadingRequest request) {
         log.info("received collect reading request: {}", request);
-        readingCollectedProducer.publish(new ReadingCollected(request.deviceId()));
+        readingCollectedProducer.publish(new ReadingCollectedEvent(request.deviceId()));
     }
 }

@@ -1,6 +1,6 @@
 package com.hrushi.telemetry.consumer;
 
-import com.hrushi.telemetry.events.ReadingCollected;
+import com.hrushi.telemetry.events.ReadingCollectedEvent;
 import com.hrushi.telemetry.exception.RetryableException;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.slf4j.Logger;
@@ -31,20 +31,20 @@ class ReadingCollectedConsumer {
             groupId = "collect-readings-group",
             containerFactory = "readingCollectedKafkaListenerContainerFactory"
     )
-    void consume(ConsumerRecord<String, ReadingCollected> record) {
-        ReadingCollected readingCollected = record.value();
-        log.debug("received event: {}", readingCollected);
-        processEvent(readingCollected);
+    void consume(ConsumerRecord<String, ReadingCollectedEvent> record) {
+        ReadingCollectedEvent readingCollectedEvent = record.value();
+        log.debug("received event: {}", readingCollectedEvent);
+        processEvent(readingCollectedEvent);
         log.debug("event processed successfully");
     }
 
     @DltHandler
-    void handleDlt(ConsumerRecord<String, ReadingCollected> record, @Header(KafkaHeaders.EXCEPTION_MESSAGE) String exceptionMessage) {
+    void handleDlt(ConsumerRecord<String, ReadingCollectedEvent> record, @Header(KafkaHeaders.EXCEPTION_MESSAGE) String exceptionMessage) {
         log.error("Event exhausted retries: deviceId={}, partition={}, offset={}, exceptionMessage={}",
                 record.value().deviceId(), record.partition(), record.offset(), exceptionMessage);
     }
 
-    private void processEvent(ReadingCollected readingCollected) {
-        log.debug("processing event: {}", readingCollected);
+    private void processEvent(ReadingCollectedEvent readingCollectedEvent) {
+        log.debug("processing event: {}", readingCollectedEvent);
     }
 }

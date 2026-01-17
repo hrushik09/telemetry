@@ -1,6 +1,6 @@
 package com.hrushi.telemetry.config;
 
-import com.hrushi.telemetry.events.ReadingCollected;
+import com.hrushi.telemetry.events.ReadingCollectedEvent;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
@@ -24,7 +24,7 @@ class KafkaConfig {
     }
 
     @Bean
-    ProducerFactory<String, ReadingCollected> readingCollectedProducerFactory() {
+    ProducerFactory<String, ReadingCollectedEvent> readingCollectedProducerFactory() {
         Map<String, Object> configs = Map.of(
                 ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers,
                 ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class,
@@ -38,12 +38,12 @@ class KafkaConfig {
     }
 
     @Bean
-    KafkaTemplate<String, ReadingCollected> readingCollectedKafkaTemplate(ProducerFactory<String, ReadingCollected> readingCollectedProducerFactory) {
+    KafkaTemplate<String, ReadingCollectedEvent> readingCollectedKafkaTemplate(ProducerFactory<String, ReadingCollectedEvent> readingCollectedProducerFactory) {
         return new KafkaTemplate<>(readingCollectedProducerFactory);
     }
 
     @Bean
-    ConsumerFactory<String, ReadingCollected> readingCollectedConsumerFactory() {
+    ConsumerFactory<String, ReadingCollectedEvent> readingCollectedConsumerFactory() {
         Map<String, Object> configs = Map.of(
                 ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers,
                 ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class,
@@ -51,15 +51,15 @@ class KafkaConfig {
                 ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest",
                 ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, false,
                 JacksonJsonDeserializer.TRUSTED_PACKAGES, "com.hrushi.telemetry.events",
-                JacksonJsonDeserializer.VALUE_DEFAULT_TYPE, ReadingCollected.class,
+                JacksonJsonDeserializer.VALUE_DEFAULT_TYPE, ReadingCollectedEvent.class,
                 JacksonJsonDeserializer.USE_TYPE_INFO_HEADERS, false
         );
         return new DefaultKafkaConsumerFactory<>(configs);
     }
 
     @Bean
-    ConcurrentKafkaListenerContainerFactory<String, ReadingCollected> readingCollectedKafkaListenerContainerFactory(ConsumerFactory<String, ReadingCollected> readingCollectedConsumerFactory) {
-        ConcurrentKafkaListenerContainerFactory<String, ReadingCollected> factory = new ConcurrentKafkaListenerContainerFactory<>();
+    ConcurrentKafkaListenerContainerFactory<String, ReadingCollectedEvent> readingCollectedKafkaListenerContainerFactory(ConsumerFactory<String, ReadingCollectedEvent> readingCollectedConsumerFactory) {
+        ConcurrentKafkaListenerContainerFactory<String, ReadingCollectedEvent> factory = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(readingCollectedConsumerFactory);
         return factory;
     }
