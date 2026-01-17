@@ -1,6 +1,4 @@
-- event ingestion api
 - domain modeling
-- async event processing
 - calculate real-time analytics
     - Moving averages (1 min, 5 min, 15 min windows)
     - Historical aggregations (hourly, daily)
